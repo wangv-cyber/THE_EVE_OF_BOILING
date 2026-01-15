@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>沸腾前夜</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Imported Ma Shan Zheng for Calligraphy style */
+      @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Zcool+KuaiLe&family=Nunito:wght@700;900&display=swap');
+      
+      /* Use a cute Google Font that supports Chinese characters broadly if available, fallback to rounded sans */
+      body {
+        font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+      
+      .font-calligraphy {
+        font-family: 'Ma Shan Zheng', cursive;
+      }
+
+      .font-cute {
+        font-family: 'Zcool KuaiLe', cursive;
+      }
+
+      /* 1. Tablecloth Pattern Background */
+      .bg-tablecloth {
+        background-color: #fff8e7;
+        background-image: 
+          linear-gradient(45deg, #ffe4c4 25%, transparent 25%, transparent 75%, #ffe4c4 75%, #ffe4c4),
+          linear-gradient(45deg, #ffe4c4 25%, transparent 25%, transparent 75%, #ffe4c4 75%, #ffe4c4);
+        background-position: 0 0, 10px 10px;
+        background-size: 20px 20px;
+      }
+
+      /* 2. Claymorphism / Soft 3D Utilities */
+      .clay-card {
+        background: #ffffff;
+        border-radius: 24px;
+        box-shadow: 
+          8px 8px 16px #d1c8b0, 
+          -8px -8px 16px #ffffff;
+        border: 2px solid #fff;
+      }
+
+      .clay-btn {
+        transition: all 0.1s ease;
+        box-shadow: 
+          6px 6px 12px rgba(0,0,0,0.1), 
+          -4px -4px 10px rgba(255,255,255,0.8),
+          inset 2px 2px 4px rgba(255,255,255,0.5);
+      }
+      .clay-btn:active {
+        transform: scale(0.98);
+        box-shadow: 
+          inset 4px 4px 8px rgba(0,0,0,0.1), 
+          inset -4px -4px 8px rgba(255,255,255,0.8);
+      }
+
+      /* 3. Animations */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes steam {
+        0% { opacity: 0; transform: translateY(0) scale(1); }
+        50% { opacity: 0.6; }
+        100% { opacity: 0; transform: translateY(-40px) scale(1.5); }
+      }
+      .steam-bubble {
+        animation: steam 2s infinite;
+      }
+      
+      /* New Boiling Animation for the Pot Bubbles */
+      @keyframes boil {
+        0% { transform: scale(0); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        100% { transform: scale(1.5); opacity: 0; }
+      }
+      .animate-boil {
+        animation: boil 2s infinite ease-out;
+      }
+
+      @keyframes wave {
+        0% { transform: translateX(0) translateZ(0) scaleY(1) }
+        50% { transform: translateX(-25%) translateZ(0) scaleY(0.8) }
+        100% { transform: translateX(-50%) translateZ(0) scaleY(1) }
+      }
+      .wave-bg {
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 88.7'%3E%3Cpath d='M800 56.9c-155.5 0-204.9-50-405.5-49.9-200 0-250 49.9-394.5 49.9v31.8h800v-.2-31.6z' fill='%23ffffff' opacity='0.3'/%3E%3C/svg%3E");
+        background-repeat: repeat-x;
+        width: 200%;
+        height: 100%;
+        animation: wave 10s linear infinite;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-tablecloth text-stone-700 antialiased overflow-hidden selection:bg-orange-200">
+    <div id="root"></div>
+  </body>
+</html>
