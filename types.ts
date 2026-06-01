@@ -1,5 +1,5 @@
 
-export type PlayerId = 'user' | 'bot1' | 'bot2' | 'bot3' | 'bot4' | 'bot5' | 'bot6' | 'bot7';
+export type PlayerId = 'user' | 'bot1' | 'bot2' | 'bot3' | 'bot4' | 'bot5' | 'bot6' | 'bot7' | string;
 
 export interface FoodItem {
   id: string;
@@ -52,3 +52,5 @@ export interface SliderConfig {
   safeMax: number;
   warnMax: number;
 }
+
+export type GameMode = 'SOLO' | 'ONLINE' | null;

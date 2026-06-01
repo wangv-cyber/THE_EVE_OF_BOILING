@@ -1,5 +1,4 @@
-
-import { SliderConfig, FoodItem } from './types';
+import type { SliderConfig, FoodItem } from './types.ts';
 
 // V2.0: L_MIN = 40 * N, L_MAX = 60 * N
 export const LIMIT_MULTIPLIER = {
@@ -37,7 +36,7 @@ export const AVATARS = {
 // REMOVED tableware (bowls 🥣, pans 🥘)
 export const FOOD_LIBRARY = [
   // Meats
-  '🥩', '🍗', '🥓', '🍖', 
+  '🥩', '🍗', '🥓', '🍖',
   // Veggies
   '🥬', '🥦', '🌽', '🥕', '🍄', '🍅', '🥔', '🍆',
   // Seafood / Proteins
@@ -50,19 +49,19 @@ export const FOOD_LIBRARY = [
 export const LOBBY_DECOR = {
   SPICES: ['🌶️', '🧄', '🧅', '🍁', '🍃'], // Maple leaf used as Star Anise
   UTENSILS: ['🥢', '🥣', '🥡', '🍶'],
-  TITLE_MAIN: '沸腾前夜',
-  TITLE_SUB: 'THE EVE OF BOILING'
+  TITLE_MAIN: '沸腾之夜',
+  TITLE_SUB: 'THE BOILING NIGHT'
 };
 
 // NEW: Requested Chaos Items for Lobby Overlays
 export const LOBBY_CHAOS_ITEMS = [
   // Required Spices & Meat
-  '🥩', '🌶️', '🧅', '🧄', '🫚', 
+  '🥩', '🌶️', '🧅', '🧄', '🫚',
   // Drinks
   '🍺', '🥃', '🍷', '🍹', '🥤',
   // Extra Richness
-  '🥓', '🥦', '🍄', '🦞', '🦀', 
-  '🥢', '🥣' 
+  '🥓', '🥦', '🍄', '🦞', '🦀',
+  '🥢', '🥣'
 ];
 
 export const generateFoodItem = (): FoodItem => {
@@ -87,7 +86,7 @@ export const THEME_COLORS = {
   SAFE: 'from-[#fff1eb] to-[#ace0f9]', // Light Blue/White (Bone Broth)
   WARN: 'from-[#fad0c4] to-[#ffd1ff]', // Pinkish (Tomato)
   DANGER: 'from-[#ff9a9e] to-[#fecfef]', // Red/Pink (Spicy)
-  
+
   // UI Accents
   BUTTON_GRADIENT: 'from-[#fbc2eb] to-[#a6c1ee]',
   BUTTON_HOVER: 'from-[#fbc2eb] to-[#a6c1ee]',

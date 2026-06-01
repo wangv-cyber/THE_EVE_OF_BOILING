@@ -231,13 +231,13 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({
          {/* ROLE STAMP OVERLAY (Compact) */}
          {isRevealed && variant !== 'waiting' && roleType !== 'NORMAL' && (
              <div className={`
-                absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center font-black text-[10px] rotate-[-15deg] shadow-sm pointer-events-none border-2 rounded px-1
-                ${roleType === 'CRIMINAL' ? 'bg-red-600 text-white border-white' : ''}
-                ${roleType === 'GOURMET' ? 'bg-yellow-400 text-yellow-900 border-white' : ''}
+                absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-max max-w-[150%] text-center font-black shadow-sm pointer-events-none border-2 rounded px-1 whitespace-nowrap z-50
+                ${roleType === 'CRIMINAL' ? 'bg-red-600 text-white border-white text-[8px] sm:text-[10px]' : ''}
+                ${roleType === 'GOURMET' ? 'bg-yellow-400 text-yellow-900 border-white text-[8px] sm:text-[10px]' : ''}
                 ${roleType === 'COWARD' ? 'bg-stone-500 text-stone-200 border-stone-300 text-[8px]' : ''}
              `}>
-                 {roleType === 'CRIMINAL' && '饭醉'}
-                 {roleType === 'GOURMET' && '老饕'}
+                 {roleType === 'CRIMINAL' && '饭醉分子'}
+                 {roleType === 'GOURMET' && '顶级老饕'}
                  {roleType === 'COWARD' && '小鸟胃'}
              </div>
          )}

@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { GameState, Player } from '../types';
 import { PlayerCard } from './PlayerCard';
-import { Share2, Play, Copy, Users, X, Check, Trash2, Lock } from 'lucide-react';
+import { Share2, Play, Copy, Users, X, Check, Trash2, Lock, LogOut } from 'lucide-react';
 import { platformAlert, platformVibrate, callCloudFunction } from '../utils/platform';
 import { ROOM_CONFIG } from '../constants';
 
@@ -13,9 +13,10 @@ interface RoomPanelProps {
   onClose: () => void; // Minimize
   onDisband: () => void; // Delete Room
   onKick: (id: string) => void; // Kick Player
+  onLeave: () => void; // NEW: Leave Room (Guest)
 }
 
-export const RoomPanel: React.FC<RoomPanelProps> = ({ gameState, onStart, onUpdateProfile, onClose, onDisband, onKick }) => {
+export const RoomPanel: React.FC<RoomPanelProps> = ({ gameState, onStart, onUpdateProfile, onClose, onDisband, onKick, onLeave }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [tempName, setTempName] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -30,7 +31,7 @@ export const RoomPanel: React.FC<RoomPanelProps> = ({ gameState, onStart, onUpda
   const handleShare = () => {
     platformVibrate('light');
     // In WeChat, this would open share menu. In Web, we mock it.
-    platformAlert('邀请好友', `转发给好友或群聊:\n\n【沸腾前夜】房间号: ${gameState.roomCode}\n邀你一起吃火锅！`);
+    platformAlert('邀请好友', `转发给好友或群聊:\n\n【沸腾之夜】房间号: ${gameState.roomCode}\n邀你一起吃火锅！`);
   };
 
   const openEdit = () => {
@@ -115,17 +116,24 @@ export const RoomPanel: React.FC<RoomPanelProps> = ({ gameState, onStart, onUpda
 
       {/* Bottom Actions */}
       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white to-transparent">
-        {/* Disband Button (Host Only) */}
-        {isHost && (
-             <div className="flex justify-center mb-3">
+        {/* Disband (Host) or Leave (Guest) Button */}
+        <div className="flex justify-center mb-3">
+            {isHost ? (
                  <button 
                     onClick={onDisband}
                     className="text-stone-400 text-xs font-bold flex items-center gap-1 hover:text-red-500 transition-colors px-2 py-1 rounded"
                  >
                     <Trash2 size={12} /> 解散房间
                  </button>
-             </div>
-        )}
+            ) : (
+                 <button 
+                    onClick={onLeave}
+                    className="text-stone-400 text-xs font-bold flex items-center gap-1 hover:text-red-500 transition-colors px-2 py-1 rounded"
+                 >
+                    <LogOut size={12} /> 离开房间
+                 </button>
+            )}
+        </div>
 
         {/* Start Button */}
         {gameState.isHost ? (

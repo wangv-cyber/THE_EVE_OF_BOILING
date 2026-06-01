@@ -1,13 +1,9 @@
-
-import { cloudFunctions } from '../services/cloudMock';
+import { gameAdapter, IGameService } from '../services/gameAdapter';
 
 /**
  * PLATFORM ADAPTER
  * ----------------
- * This file acts as a bridge between the game logic and the runtime environment.
- * 
- * CURRENT ENVIRONMENT: Web Browser
- * TARGET ENVIRONMENT: WeChat Mini Program
+ * Bridges UI to the Logic Layer (GameAdapter).
  */
 
 // 1. Vibration / Haptics
@@ -23,22 +19,45 @@ export const platformAlert = (title: string, content: string) => {
   alert(`${title}\n\n${content}`);
 };
 
-// 3. Mock Cloud Function Call
-// This simulates wx.cloud.callFunction({ name, data })
-export const callCloudFunction = async (name: keyof typeof cloudFunctions, data: any): Promise<any> => {
-  console.log(`[☁️ Cloud] Calling '${name}'...`, data);
+// 3. Unified API Call
+export const callCloudFunction = async (name: keyof IGameService, data: any): Promise<any> => {
+  // console.log(`[Adapter] Calling '${name}'...`, data);
   
-  // Simulate Network Latency (Crucial for UX pacing)
-  await new Promise(resolve => setTimeout(resolve, 600));
-  
-  const fn = cloudFunctions[name];
+  const service = gameAdapter.getService();
+  // CRITICAL FIX: Bind the function to the service instance.
+  // Without .bind(service), methods from Class-based services (like OnlineGameService)
+  // lose their 'this' context, causing errors when accessing 'this.socket' etc.
+  const fn = (service[name] as Function).bind(service);
+
   if (!fn) {
-    console.error(`Cloud function '${name}' not found.`);
-    throw new Error(`Cloud function '${name}' not found.`);
+    throw new Error(`Function '${name}' not implemented in current service.`);
   }
 
-  // Execute Mock Logic
-  const result = await fn(data);
-  console.log(`[☁️ Cloud] Result from '${name}':`, result);
+  // Simulate network latency for local mode only to feel real
+  // Online mode has real latency
+  // @ts-ignore
+  if (service.constructor.name !== 'OnlineGameService') {
+     await new Promise(resolve => setTimeout(resolve, 300));
+  }
+
+  // Spread arguments if data is object, or pass directly
+  // Adjusting signature to match Service methods
+  let result;
+  if (name === 'createRoom' || name === 'getLeaderboard') {
+      result = await fn(data);
+  } else if (name === 'joinRoom') {
+      result = await fn(data.roomCode);
+  } else if (name === 'settleRound') {
+      result = await fn(data.gameState, data.userBid);
+  } else if (name === 'kickPlayer') {
+      result = await fn(data.gameState, data.targetId);
+  } else if (name === 'updateProfile') {
+      result = await fn(data.gameState, data.name, data.avatar);
+  } else if (name === 'startGame' || name === 'disbandRoom') {
+      result = await fn(data.gameState);
+  } else {
+      result = await fn(data);
+  }
+
   return result;
 };
